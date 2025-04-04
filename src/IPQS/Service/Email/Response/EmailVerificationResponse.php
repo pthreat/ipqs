@@ -17,11 +17,6 @@ readonly class EmailVerificationResponse implements EmailVerificationResponseInt
         );
     }
 
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
     public function isTimedOut(): bool|null
     {
         return $this->data['timed_out'] ?? null;
@@ -136,4 +131,15 @@ readonly class EmailVerificationResponse implements EmailVerificationResponseInt
     {
         return $this->data['message'] ?? null;
     }
+
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
+    public function toJSON(int $flags=\JSON_THROW_ON_ERROR|\JSON_PRETTY_PRINT): string
+    {
+        return json_encode($this->data, $flags);
+    }
+
 }

@@ -17,11 +17,6 @@ readonly class PhoneVerificationResponse implements PhoneVerificationResponseInt
         );
     }
 
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
     public function isRecentAbuse(): bool|null
     {
         return $this->data['recent_abuse'] ?? null;
@@ -111,4 +106,15 @@ readonly class PhoneVerificationResponse implements PhoneVerificationResponseInt
     {
         return $this->data['message'] ?? null;
     }
+
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
+    public function toJSON(int $flags=\JSON_THROW_ON_ERROR|\JSON_PRETTY_PRINT): string
+    {
+        return json_encode($this->data, $flags);
+    }
+
 }

@@ -30,6 +30,12 @@ interface IPQSVerificationResponseInterface
     public function getRequestId(): string|null;
 
     /**
+     * @throws \JsonException
+     * Returns response in JSON format
+     */
+    public function toJSON(int $flags) : string;
+
+    /**
      * Returns raw response body.
      */
     public function toArray(): array;

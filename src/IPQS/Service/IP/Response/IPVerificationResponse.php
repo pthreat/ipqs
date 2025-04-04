@@ -151,4 +151,9 @@ readonly class IPVerificationResponse implements IPVerificationResponseInterface
     {
         return $this->data;
     }
+
+    public function toJSON(int $flags=\JSON_THROW_ON_ERROR|\JSON_PRETTY_PRINT): string
+    {
+        return json_encode($this->data, $flags);
+    }
 }

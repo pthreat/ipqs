@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use IPQS\Service\Email\Command\IPQSEmailVerificationCommand;
+use IPQS\Service\IP\Command\IPQSIPAddressVerificationCommand;
+use IPQS\Service\Phone\Command\IPQSPhoneVerificationCommand;
+use Symfony\Component\Console\Application;
+use IPQS\IPQSConstants;
+
+$ipqsKey = getenv('IPQS_KEY');
+
+if(!is_string($ipqsKey)){
+    die('You need to define IPQS_KEY in your environment!');
+}
+
+$ipqs = new \IPQS\IPQS(key: $ipqsKey, client: null);
+
+echo file_get_contents(__DIR__.'/banner.txt');
+
+$app = new Application(name: 'PHP IPQS', version: IPQSConstants::VERSION);
+
+$app->addCommands([
+    new IPQSEmailVerificationCommand(
+        ipqs: $ipqs
+    ),
+    new IPQSIPAddressVerificationCommand(
+        ipqs: $ipqs
+    ),
+    new IPQSPhoneVerificationCommand(
+        ipqs: $ipqs
+    )
+]);
+
+try {
+    $app->run();
+} catch (Exception $e) {
+    echo "Failed to run IPQS console!\n";
+}
