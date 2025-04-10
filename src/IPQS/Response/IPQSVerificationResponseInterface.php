@@ -24,6 +24,11 @@ interface IPQSVerificationResponseInterface
     public function isSuccess(): bool|null;
 
     /**
+     * Fraud score (0 - 100)
+     */
+    public function getFraudScore() : float|null;
+
+    /**
      * A unique identifier for this request that can be used to look up
      * the request details or send a postback conversion notice.
      */

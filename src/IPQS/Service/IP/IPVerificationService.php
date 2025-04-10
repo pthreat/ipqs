@@ -49,7 +49,7 @@ readonly class IPVerificationService implements IPVerificationServiceInterface
 
             return IPVerificationResponse::fromJSON($response->getBody()->getContents());
         } catch (GuzzleException|\JsonException $e) {
-            $msg = 'Failed to perform IP address verification';
+            $msg = 'Failed to perform email verification';
             throw new Exception\IPVerificationServiceException($msg, 0, $e);
         }
     }

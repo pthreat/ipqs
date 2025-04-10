@@ -49,7 +49,7 @@ readonly class PhoneVerificationService implements PhoneVerificationServiceInter
 
             return PhoneVerificationResponse::fromJSON($response->getBody()->getContents());
         } catch (GuzzleException|\JsonException $e) {
-            $msg = 'Failed to perform phone verification';
+            $msg = 'Failed to perform email verification';
             throw new Exception\PhoneVerificationServiceException($msg, 0, $e);
         }
     }

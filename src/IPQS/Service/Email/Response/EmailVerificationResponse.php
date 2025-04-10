@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace IPQS\Service\Email\Response;
 
+use IPQS\Response\VerificationResponseTrait;
+
 readonly class EmailVerificationResponse implements EmailVerificationResponseInterface
 {
-    public function __construct(private array $data)
-    {
-    }
-
-    public static function fromJSON(string $body): EmailVerificationResponseInterface
-    {
-        return new self(
-            json_decode($body, true, 512, \JSON_THROW_ON_ERROR)
-        );
-    }
+    use VerificationResponseTrait;
 
     public function isTimedOut(): bool|null
     {
@@ -102,19 +95,9 @@ readonly class EmailVerificationResponse implements EmailVerificationResponseInt
         return $this->data['valid'] ?? null;
     }
 
-    public function isSuccess(): bool|null
-    {
-        return $this->data['success'] ?? null;
-    }
-
     public function isSpamTrapScore(): bool|null
     {
         return $this->data['spam_trap_score'] ?? null;
-    }
-
-    public function getRequestId(): string|null
-    {
-        return $this->data['request_id'] ?? null;
     }
 
     public function getDomainAge(): array|null
@@ -125,21 +108,6 @@ readonly class EmailVerificationResponse implements EmailVerificationResponseInt
     public function getFirstSeen(): array|null
     {
         return $this->data['first_seen'] ?? null;
-    }
-
-    public function getMessage(): string|null
-    {
-        return $this->data['message'] ?? null;
-    }
-
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
-    public function toJSON(int $flags=\JSON_THROW_ON_ERROR|\JSON_PRETTY_PRINT): string
-    {
-        return json_encode($this->data, $flags);
     }
 
 }

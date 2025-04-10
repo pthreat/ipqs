@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace IPQS\Service\Phone\Response;
 
-readonly class PhoneVerificationResponse implements PhoneVerificationResponseInterface
+use IPQS\Response\VerificationResponseTrait;
+
+readonly class PhoneVerificationResponse  implements PhoneVerificationResponseInterface
 {
-    public function __construct(private array $data)
-    {
-    }
-
-    public static function fromJSON(string $body): PhoneVerificationResponseInterface
-    {
-        return new self(
-            json_decode($body, true, 512, \JSON_THROW_ON_ERROR)
-        );
-    }
-
-    public function isRecentAbuse(): bool|null
-    {
-        return $this->data['recent_abuse'] ?? null;
-    }
+    use VerificationResponseTrait;
 
     public function getFormatted(): string|null
     {
@@ -90,31 +78,6 @@ readonly class PhoneVerificationResponse implements PhoneVerificationResponseInt
     public function isValid(): bool|null
     {
         return $this->data['valid'] ?? null;
-    }
-
-    public function isSuccess(): bool|null
-    {
-        return $this->data['success'] ?? null;
-    }
-
-    public function getRequestId(): string|null
-    {
-        return $this->data['request_id'] ?? null;
-    }
-
-    public function getMessage(): string|null
-    {
-        return $this->data['message'] ?? null;
-    }
-
-    public function toArray(): array
-    {
-        return $this->data;
-    }
-
-    public function toJSON(int $flags=\JSON_THROW_ON_ERROR|\JSON_PRETTY_PRINT): string
-    {
-        return json_encode($this->data, $flags);
     }
 
 }
