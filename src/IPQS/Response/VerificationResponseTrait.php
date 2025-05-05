@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace IPQS\Response;
 
-use IPQS\Service\Phone\Response\PhoneVerificationResponseInterface;
-
 trait VerificationResponseTrait
 {
 
@@ -40,9 +38,13 @@ trait VerificationResponseTrait
 
     public static function fromJSON(string $body): IPQSVerificationResponseInterface
     {
-        return new self(
-            json_decode($body, true, 512, \JSON_THROW_ON_ERROR)
-        );
+        $decoded =  json_decode($body, true, 512, \JSON_THROW_ON_ERROR);
+
+        if(array_key_exists('fraud_chance', $decoded)){
+            $decoded['fraud_score'] = array_key_exists('fraud_chance', $decoded) ? $decoded['fraud_chance'] : null;
+        }
+
+        return new self($decoded);
     }
 
     public function toArray(): array
