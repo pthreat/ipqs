@@ -6,6 +6,8 @@ namespace IPQS;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Client as HTTPClient;
+use IPQS\Service\Device\DeviceVerificationService;
+use IPQS\Service\Device\DeviceVerificationServiceInterface;
 use IPQS\Service\Email\EmailVerificationService;
 use IPQS\Service\Email\EmailVerificationServiceInterface;
 use IPQS\Service\IP\IPVerificationService;
@@ -34,5 +36,10 @@ readonly class IPQS implements IPQSInterface
     public function ip(): IPVerificationServiceInterface
     {
         return new IPVerificationService($this->client ?? new HTTPClient(), $this->key);
+    }
+
+    public function device(): DeviceVerificationServiceInterface
+    {
+        return new DeviceVerificationService($this->client ?? new HTTPClient(), $this->key);
     }
 }
