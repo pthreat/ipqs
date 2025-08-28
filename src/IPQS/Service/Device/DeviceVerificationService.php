@@ -12,6 +12,10 @@ use IPQS\Options\IPQSVerificationOptionsInterface;
 use IPQS\Service\Device\Options\DeviceVerificationOptionsInterface;
 use IPQS\Service\Device\Response\DeviceVerificationResponse;
 use IPQS\Service\Device\Response\DeviceVerificationResponseInterface;
+use IPQS\Service\Request\Constants\IPQSRequestTypeEnum;
+use IPQS\Service\Request\Exception\IPQSRequestServiceException;
+use IPQS\Service\Request\IPQSRequestService;
+use IPQS\Service\Request\IPQSRequestServiceInterface;
 
 readonly class DeviceVerificationService implements DeviceVerificationServiceInterface
 {
@@ -19,8 +23,22 @@ readonly class DeviceVerificationService implements DeviceVerificationServiceInt
 
     public function __construct(
         private ClientInterface $client,
-        private string $key
+        private string $key,
+        private IPQSRequestServiceInterface|null $requestService=null
     ) {
+    }
+
+    public function getByRequestId(string $requestId) : array
+    {
+        try {
+            return ($this->requestService ?? new IPQSRequestService(client: $this->client, key: $this->key))->fetchOne(
+                type: IPQSRequestTypeEnum::DEVICE,
+                requestId: $requestId
+            );
+        }catch(IPQSRequestServiceException $e){
+            $msg = 'Failed to obtain request id response for device tracker';
+            throw new Exception\DeviceVerificationServiceException($msg, 0, $e);
+        }
     }
 
     public function verify(

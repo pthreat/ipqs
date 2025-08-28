@@ -17,4 +17,10 @@ interface DeviceVerificationServiceInterface extends IPQSVerificationServiceInte
         \Stringable|string $value,
         IPQSVerificationOptionsInterface $options
     ): DeviceVerificationResponseInterface;
+
+    /**
+     * @throws Exception\DeviceVerificationServiceException
+     */
+    public function getByRequestId(string $requestId) : array;
+
 }

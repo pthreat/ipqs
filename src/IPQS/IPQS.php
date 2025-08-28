@@ -14,6 +14,8 @@ use IPQS\Service\IP\IPVerificationService;
 use IPQS\Service\IP\IPVerificationServiceInterface;
 use IPQS\Service\Phone\PhoneVerificationService;
 use IPQS\Service\Phone\PhoneVerificationServiceInterface;
+use IPQS\Service\Request\IPQSRequestServiceInterface;
+use IPQS\Service\Request\IPQSRequestService;
 
 readonly class IPQS implements IPQSInterface
 {
@@ -41,5 +43,10 @@ readonly class IPQS implements IPQSInterface
     public function device(): DeviceVerificationServiceInterface
     {
         return new DeviceVerificationService($this->client ?? new HTTPClient(), $this->key);
+    }
+
+    public function request() : IPQSRequestServiceInterface
+    {
+        return new IPQSRequestService($this->client ?? new HTTPClient(), $this->key);
     }
 }
