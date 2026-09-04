@@ -20,12 +20,12 @@
     }
   ],
   "require": {
-    "php": ">=8.3",
+    "php": ">=8.5",
     "guzzlehttp/guzzle": "^7.9.0"
   },
   "require-dev": {
-    "symfony/console": "^7.2.0",
-    "symfony/var-dumper": "^v7.2.0"
+    "symfony/console": "^v8.1.4",
+    "symfony/var-dumper": "^v8.1.2"
   },
   "autoload": {
     "psr-4": {
