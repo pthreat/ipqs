@@ -3,7 +3,7 @@ services:
   ipqs:
     hostname: "php"
     container_name: "pthreat-ipqs"
-    image: php:8.3-cli
+    image: php:8.5-cli
     command: ['/bin/docker-start']
     env_file: "./environment"
     volumes:
